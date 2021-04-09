@@ -1,15 +1,17 @@
 package com.cloud.authservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Optional;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Entity
 public class User extends BaseEntity {
+
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     private String username;
 
@@ -17,18 +19,31 @@ public class User extends BaseEntity {
 
     private String email;
 
+    private String accountType;
+
+    public User() {
+    }
+
+    public User(String username, String password, String email, String accountType) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.accountType = accountType;
+    }
+
     public User mergeUser(User userToMerge) {
         userToMerge.setUsername(Optional.ofNullable(userToMerge.getUsername()).orElse(this.username));
         userToMerge.setPassword(Optional.ofNullable(userToMerge.getPassword()).orElse(this.password));
         userToMerge.setEmail(Optional.ofNullable(userToMerge.getEmail()).orElse(this.email));
+        userToMerge.setAccountType(Optional.ofNullable(userToMerge.getAccountType()).orElse(this.accountType));
         return this;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -56,15 +71,22 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", createdAt=" + createdAt +
-                ", lastUpdatedAt=" + lastUpdatedAt +
-                '}';
+               "id='" + id + '\'' +
+               ", username='" + username + '\'' +
+               ", password='" + password + '\'' +
+               ", email='" + email + '\'' +
+               ", accountType='" + accountType + '\'' +
+               '}';
     }
 }

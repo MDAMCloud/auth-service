@@ -16,12 +16,11 @@ public class UserRequest {
     @Email
     private String email;
 
+    @NotNull
+    private String accountType;
+
     public User toUser(){
-        User user = new User();
-        user.setUsername(this.username);
-        user.setPassword(this.password);
-        user.setEmail(this.email);
-        return user;
+        return new User(username, password, email, accountType);
     }
 
     public String getUsername() {
@@ -46,5 +45,13 @@ public class UserRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

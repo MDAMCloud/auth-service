@@ -6,9 +6,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class UserUpdateRequest extends UserRequest{
+
     @NotNull
-    @Positive
-    private Long id;
+    private String id;
 
     private String username;
 
@@ -16,17 +16,19 @@ public class UserUpdateRequest extends UserRequest{
 
     private String email;
 
+    private String accountType;
+
     public User toUser(){
         User user = super.toUser();
         user.setId(this.id);
         return user;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,6 +60,14 @@ public class UserUpdateRequest extends UserRequest{
     @Override
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     @Override

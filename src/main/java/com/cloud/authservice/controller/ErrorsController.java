@@ -28,7 +28,7 @@ public class ErrorsController {
 
     @ApiOperation("Get all user errors by given id")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<Errors>> getAllActionsUserById(@PathVariable Long id) {
+    public ResponseEntity<List<Errors>> getAllActionsUserById(@PathVariable String id) {
         List<Errors> errors = errorsService.getAllByUserId(id);
         return new ResponseEntity<>(errors, HttpStatus.OK);
     }

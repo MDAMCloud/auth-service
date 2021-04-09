@@ -7,18 +7,16 @@ import org.hibernate.annotations.GenerationTime;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @MappedSuperclass
 public abstract class BaseEntity {
 
-    @Generated(value = GenerationTime.INSERT)
-    @ColumnDefault("CURRENT_TIMESTAMP(6)")
-    @Column(nullable = false)
+    @CreatedDate
     protected LocalDateTime createdAt;
 
-    @Generated(value = GenerationTime.INSERT)
-    @ColumnDefault("CURRENT_TIMESTAMP(6) on update CURRENT_TIMESTAMP(6)")
-    @Column(nullable = false)
+    @LastModifiedDate
     protected LocalDateTime lastUpdatedAt;
 
     public LocalDateTime getCreatedAt() {

@@ -12,13 +12,15 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public User get(Long id) throws NoUserFoundException {
+    public User get(String id) throws NoUserFoundException {
         Optional<User> user = userRepository.findById(id);
+
         if (user.isPresent())
             return user.get();
         else {
@@ -36,7 +38,7 @@ public class UserService {
     }
 
     public List<User> getAll() {
-        List<User> users = (List<User>) userRepository.findAll();
+        List<User> users = userRepository.findAll();
         return users;
     }
 

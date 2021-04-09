@@ -2,8 +2,10 @@ FROM openjdk:11
 
 EXPOSE 8080
 
-WORKDIR /urlshortenerauthapp
+WORKDIR .
 
-COPY ./auth-service-executable.jar .
+ARG JAR_FILE=target/*.jar
 
-ENTRYPOINT [ "java", "-jar", "auth-service-executable.jar" ]
+COPY ${JAR_FILE} app.jar
+
+ENTRYPOINT [ "java", "-jar", "app.jar" ]

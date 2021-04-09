@@ -29,14 +29,14 @@ public class ActionController {
 
     @ApiOperation("Get all user actions by given id")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<Action>> getAllActionsUserById(@PathVariable Long id) {
+    public ResponseEntity<List<Action>> getAllActionsUserById(@PathVariable String id) {
         List<Action> actions = actionService.getAllByUserId(id);
         return new ResponseEntity<>(actions, HttpStatus.OK);
     }
 
     @ApiOperation("Get all user actions by given id and action type")
     @GetMapping("/all/{id}/action-type")
-    public ResponseEntity<List<Action>> getAllActionsUserById(@PathVariable Long id, @RequestParam Action.ActionType actionType) {
+    public ResponseEntity<List<Action>> getAllActionsUserById(@PathVariable String id, @RequestParam Action.ActionType actionType) {
         List<Action> actions = actionService.getAllByUserIdAndActionType(id, actionType);
         return new ResponseEntity<>(actions, HttpStatus.OK);
     }

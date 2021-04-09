@@ -1,22 +1,24 @@
 package com.cloud.authservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Entity
 public class Errors extends BaseEntity{
     @Id
-    @GeneratedValue
-    private Long id;
+    @Field("_id")
+    private String id;
 
-    private Long userId;
+    private String userId;
 
     private String username;
 
     private String errorMessage;
 
-    public static Errors newError(Long userId, String username, String errorMessage) {
+    public static Errors newError(String userId, String username, String errorMessage) {
         Errors error = new Errors();
         error.setUserId(userId);
         error.setUsername(username);
@@ -24,19 +26,19 @@ public class Errors extends BaseEntity{
         return error;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

@@ -4,13 +4,12 @@ import com.cloud.authservice.entity.Action;
 import com.cloud.authservice.repository.ActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class ActionService {
     @Autowired
-    ActionRepository actionRepository;
+    private ActionRepository actionRepository;
 
     public Action add(Action action) {
         return actionRepository.save(action);
@@ -21,12 +20,12 @@ public class ActionService {
         return actions;
     }
 
-    public List<Action> getAllByUserId(Long userId) {
+    public List<Action> getAllByUserId(String userId) {
         List<Action> actions = actionRepository.findAllByUserId(userId);
         return actions;
     }
 
-    public List<Action> getAllByUserIdAndActionType(Long userId, Action.ActionType actionType) {
+    public List<Action> getAllByUserIdAndActionType(String userId, Action.ActionType actionType) {
         List<Action> actions = actionRepository.findAllByUserIdAndActionType(userId, actionType.name());
         return actions;
     }

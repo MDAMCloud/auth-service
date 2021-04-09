@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class OperatorService {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    ActionService actionService;
+    private ActionService actionService;
 
     public User addUser(User newUser) {
         User user = null;

@@ -73,7 +73,7 @@ public class UserController {
 
     @ApiOperation("Get user by given id")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable String id) {
         try {
             User user = userService.get(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -97,7 +97,7 @@ public class UserController {
 
     @ApiOperation("Delete user by given id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUserById(@PathVariable String id) {
         try {
             User userToDelete = userService.get(id);
             operatorService.deleteUser(userToDelete);

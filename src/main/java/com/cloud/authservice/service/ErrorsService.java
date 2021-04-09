@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class ErrorsService {
     @Autowired
-    ErrorsRepository errorRepository;
+    private ErrorsRepository errorRepository;
 
     public Errors add(Errors error) {
         Errors addedError = errorRepository.save(error);
@@ -22,7 +22,7 @@ public class ErrorsService {
         return errors;
     }
 
-    public List<Errors> getAllByUserId(Long userId) {
+    public List<Errors> getAllByUserId(String userId) {
         List<Errors> errors = errorRepository.findAllByUserId(userId);
         return errors;
     }

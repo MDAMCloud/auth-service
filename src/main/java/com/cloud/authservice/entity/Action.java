@@ -1,17 +1,20 @@
 package com.cloud.authservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Entity
 public class Action extends BaseEntity{
-    @Id
-    @GeneratedValue
-    private Long id;
 
-    private Long userId;
+    @Id
+    @Field("_id")
+    private String id;
+
+    private String userId;
 
     private String username;
 
@@ -35,19 +38,27 @@ public class Action extends BaseEntity{
         return action;
     }
 
-    public Long getId() {
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public void setActionStatus(String actionStatus) {
+        this.actionStatus = actionStatus;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
