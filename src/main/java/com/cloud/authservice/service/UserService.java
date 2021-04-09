@@ -1,14 +1,23 @@
 package com.cloud.authservice.service;
 
+import com.cloud.authservice.entity.Action;
+import com.cloud.authservice.entity.Token;
 import com.cloud.authservice.entity.User;
 import com.cloud.authservice.exception.NoUserFoundException;
 import com.cloud.authservice.repository.UserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.cloud.authservice.security.SecurityConstants.EXPIRATION_TIME;
+import static com.cloud.authservice.security.SecurityConstants.SECRET;
 
 @Service
 public class UserService {
@@ -59,6 +68,20 @@ public class UserService {
         } else {
             throw new NoUserFoundException();
         }
+    }
+
+    public Token generateToken(User user) {
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
+        claims.put("userId", user.getId() + "");
+        claims.put("accountType", user.getAccountType());
+
+        String tokenString =   Jwts.builder()
+                                   .setClaims(claims)
+                                   .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                                   .signWith(SignatureAlgorithm.HS512, SECRET)
+                                   .compact();
+
+        return new Token(tokenString);
     }
 
     public void delete(User user) {
