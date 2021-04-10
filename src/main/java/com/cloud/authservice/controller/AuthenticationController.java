@@ -8,6 +8,8 @@ import com.cloud.authservice.entity.User;
 import com.cloud.authservice.security.CustomUserDetailsService;
 import com.cloud.authservice.service.ActionService;
 import com.cloud.authservice.service.UserService;
+import com.cloud.authservice.utils.AppResponse;
+import com.cloud.authservice.utils.AppResponses;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -49,7 +51,7 @@ public class AuthenticationController {
 
     @ApiOperation("Login to the system with user credentials")
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public AppResponse<Token> login(@RequestBody LoginRequest loginRequest) {
         SecurityContextHolder.clearContext();
         User user = null;
         try {
@@ -59,21 +61,22 @@ public class AuthenticationController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             Token token = userService.generateToken(user);
             actionService.add(Action.newAction(user, Action.ActionType.LOGIN, Action.ActionStatus.SUCCESSFUL, null));
-            return new ResponseEntity<>(token, HttpStatus.OK);
+            return AppResponses.from(token);
         } catch (Exception e) {
             if (user != null) {
                 actionService.add(Action.newAction(user, Action.ActionType.LOGIN, Action.ActionStatus.FAILED, "Wrong password entered."));
-                return new ResponseEntity<>("Wrong password entered.", HttpStatus.OK);
+                return AppResponses.failure("Wrong password entered.");
             } else {
-                return new ResponseEntity<>("Wrong username entered.", HttpStatus.OK);
+                return AppResponses.failure("Wrong username entered.");
             }
         }
     }
 
+    // Bu işlem fe tarafında gerçekleşmeli token client içerisinde olduğundan dolayı
     @ApiOperation("Logout from the system with user credentials")
     @GetMapping("/logout")
-    public ResponseEntity<?> logout() {
+    public AppResponse logout() {
         SecurityContextHolder.clearContext();
-        return new ResponseEntity<>("You successfully logged out", HttpStatus.OK);
+        return AppResponses.successful();
     }
 }

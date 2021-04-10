@@ -9,6 +9,8 @@ import com.cloud.authservice.security.CustomUserDetailsService;
 import com.cloud.authservice.service.ErrorsService;
 import com.cloud.authservice.service.OperatorService;
 import com.cloud.authservice.service.UserService;
+import com.cloud.authservice.utils.AppResponse;
+import com.cloud.authservice.utils.AppResponses;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,12 +43,12 @@ public class UserController {
 
     @ApiOperation("Add a new user")
     @PostMapping
-    public ResponseEntity<?> addUser(@RequestBody UserRequest request) {
+    public AppResponse<User> addUser(@RequestBody UserRequest request) {
         User addedUser = operatorService.addUser(request.toUser());
         if (addedUser == null) {
-            return new ResponseEntity<>("A user with given username already exits.", HttpStatus.OK);
+            return AppResponses.failure("A user with given username already exits.");
         } else {
-            return new ResponseEntity<>(addedUser, HttpStatus.OK);
+            return AppResponses.from(addedUser);
         }
     }
 
