@@ -1,1 +1,1 @@
-web: java -jar target/auth-service-executable.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/auth-service-executable.jar
