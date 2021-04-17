@@ -2,7 +2,6 @@ package com.cloud.authservice.controller;
 
 import com.cloud.authservice.entity.Action;
 import com.cloud.authservice.entity.Token;
-import com.cloud.authservice.exception.NoUserFoundException;
 import com.cloud.authservice.request.LoginRequest;
 import com.cloud.authservice.entity.User;
 import com.cloud.authservice.security.CustomUserDetailsService;
@@ -10,13 +9,8 @@ import com.cloud.authservice.service.ActionService;
 import com.cloud.authservice.service.UserService;
 import com.cloud.authservice.utils.AppResponse;
 import com.cloud.authservice.utils.AppResponses;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,10 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static com.cloud.authservice.security.SecurityConstants.SECRET;
 
 @RestController
 @RequestMapping("/api")

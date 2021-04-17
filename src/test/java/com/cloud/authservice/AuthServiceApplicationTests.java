@@ -1,9 +1,15 @@
 package com.cloud.authservice;
 
+import com.auth0.jwk.JwkException;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cloud.authservice.entity.*;
 import com.cloud.authservice.exception.NoMessageFoundException;
 import com.cloud.authservice.exception.NoUserFoundException;
 import com.cloud.authservice.service.*;
+import java.util.Base64;
+import java.util.Calendar;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -11,11 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+import static com.cloud.authservice.security.SecurityConstants.SECRET;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
@@ -125,4 +131,14 @@ class AuthServiceApplicationTests {
 		Assert.assertEquals(1, errorsService.getAllByUserId(addedUser1.getId()).size());
 	}
 
+	void verify(String token) throws RuntimeException {
+		DecodedJWT jwt = JWT.decode(token);
+		Algorithm algorithm = Algorithm.HMAC512(Base64.getDecoder().decode(SECRET));
+		algorithm.verify(jwt);
+
+		// Check expiration
+		if (jwt.getExpiresAt().before(Calendar.getInstance().getTime())) {
+			throw new RuntimeException("Expired token!");
+		}
+	}
 }
