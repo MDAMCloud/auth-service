@@ -11,8 +11,3 @@ services:
     ports:
       - "8080:8080"                       #docker container port with your os port
     restart: always
-
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db2:3306/customer?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: mukit
