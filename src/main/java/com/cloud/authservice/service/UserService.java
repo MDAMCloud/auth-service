@@ -81,7 +81,7 @@ public class UserService {
                                    .signWith(SignatureAlgorithm.HS512, SECRET)
                                    .compact();
 
-        return new Token(tokenString);
+        return new Token(tokenString, user.getUsername(), user.getAccountType());
     }
 
     public void delete(User user) {

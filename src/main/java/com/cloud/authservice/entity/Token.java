@@ -6,15 +6,37 @@ public class Token {
 
   String token;
 
+  String username;
+
+  String accountType;
+
   public Token() {
   }
 
-  public Token(String token) {
+  public Token(String token, String username, String accountType) {
     this.token = token;
+    this.username = username;
+    this.accountType = accountType;
   }
 
   public String getToken() {
     return token;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getAccountType() {
+    return accountType;
+  }
+
+  public void setAccountType(String accountType) {
+    this.accountType = accountType;
   }
 
   public void setToken(String token) {
@@ -22,22 +44,11 @@ public class Token {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Token token1 = (Token) o;
-    return Objects.equals(token, token1.token);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(token);
-  }
-
-  @Override
   public String toString() {
     return "Token{" +
            "token='" + token + '\'' +
+           ", username='" + username + '\'' +
+           ", accountType='" + accountType + '\'' +
            '}';
   }
 }
