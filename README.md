@@ -2,7 +2,7 @@
 # URL_Shorthener
 CS443 Cloud Project
 
-# URL Shortener Service REST API microservice
+# URL Shortener Auth Service microservice
 
 This is an url shortener microservice created by using Spring Boot, MySQL, Docker.
 
